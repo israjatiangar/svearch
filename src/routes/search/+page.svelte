@@ -41,7 +41,7 @@
 	<title>{query} at svearch</title>
 </svelte:head>
 
-<main class="bg-base-300">
+<main class="min-h-dvh bg-base-200">
 	<h1 class="pb-4 text-center text-6xl">{query}</h1>
 	<section class="w-full place-items-center space-y-4 py-4">
 		<div class="flex w-full flex-col place-items-center gap-2">
@@ -53,10 +53,10 @@
 		</div>
 		<div>
 			{#if count < searchData.number_of_results}
-				<button class="btn btn-ghost btn-accent" onclick={() => (count += 10)}>Show More</button>
+				<button class="btn btn-soft btn-primary" onclick={() => (count += 10)}>Show More</button>
 			{/if}
 			{#if count > 10}
-				<button class="btn btn-ghost btn-error" onclick={() => (count = 10)}>Show less</button>
+				<button class="btn btn-soft btn-accent" onclick={() => (count = 10)}>Show less</button>
 			{/if}
 		</div>
 	</section>
