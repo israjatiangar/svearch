@@ -3,12 +3,14 @@
 	import Result from '../../components/Result.svelte';
 
 	const query = $state(page.url.searchParams.get('query'));
+	let count = $state(10);
 
 	let searchData: Search.Data = $state({
 		query: '',
 		number_of_results: 0,
 		results: []
 	});
+
 	$effect(() => {
 		if (query) {
 			const localData: Search.Data[] =
@@ -35,13 +37,27 @@
 	});
 </script>
 
-<main>
+<svelte:head>
+	<title>{query} at svearch</title>
+</svelte:head>
+
+<main class="bg-base-300">
 	<h1 class="pb-4 text-center text-6xl">{query}</h1>
-	<section class="flex w-full flex-col place-items-center gap-2">
-		{#if searchData.number_of_results > 0}
-			{#each searchData.results as item, key (key)}
-				<Result result={item} />
-			{/each}
-		{/if}
+	<section class="w-full place-items-center space-y-4 py-4">
+		<div class="flex w-full flex-col place-items-center gap-2">
+			{#if searchData.number_of_results > 0}
+				{#each searchData.results.slice(0, count) as item, key (key)}
+					<Result result={item} />
+				{/each}
+			{/if}
+		</div>
+		<div>
+			{#if count < searchData.number_of_results}
+				<button class="btn btn-ghost btn-accent" onclick={() => (count += 10)}>Show More</button>
+			{/if}
+			{#if count > 10}
+				<button class="btn btn-ghost btn-error" onclick={() => (count = 10)}>Show less</button>
+			{/if}
+		</div>
 	</section>
 </main>

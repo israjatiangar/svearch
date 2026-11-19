@@ -1,15 +1,27 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	let prop = $props();
-	const highlights = $derived(
-		new Set([...prop.result.title_highlights, ...prop.result.content_highlights])
-	);
+	let result = $derived(prop.result);
+	const highlights = $derived(new Set([...result.title_highlights, ...result.content_highlights]));
+	function openLink() {
+		navigation.navigate(result.url);
+	}
 </script>
 
-<div class="card w-4xl max-w-full bg-base-200 card-border">
+<div
+	transition:slide={{ duration: 1000 }}
+	class="card w-4xl max-w-full cursor-pointer bg-base-200 transition card-border hover:scale-105 hover:shadow-2xl"
+	onclick={() => openLink()}
+	role="button"
+	tabindex="0"
+	onkeypress={(event) => event.key === 'enter' && openLink()}
+>
 	<div class="card-body">
-		<h2 class="card-title truncate">{prop.result.title}</h2>
-		<a href={prop.url}>{prop.result.url}</a>
-		<p class="line-clamp-3">{prop.result.content}</p>
+		<h2 class="card-title truncate">
+			{result.title}
+		</h2>
+		<p>{result.url}</p>
+		<p class="line-clamp-3">{result.content}</p>
 		{#if highlights}
 			<div class="flex gap-2">
 				{#each highlights as keyword, key (key)}
