@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import Result from '../../components/Result.svelte';
 
-	const query = $state(page.url.searchParams.get('query'));
+	const query = $derived(page.url.searchParams.get('query'));
 	let count = $state(10);
 
 	let searchData: Search.Data = $state({
@@ -42,7 +42,6 @@
 </svelte:head>
 
 <main class="min-h-dvh bg-base-200">
-	<h1 class="pb-4 text-center text-6xl">{query}</h1>
 	<section class="w-full place-items-center space-y-4 py-4">
 		<div class="flex w-full flex-col place-items-center gap-2">
 			{#if searchData.number_of_results > 0}

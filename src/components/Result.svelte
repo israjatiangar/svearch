@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { slide } from 'svelte/transition';
-	const { result } = $props();
-	const highlights = $derived(new Set([...result.title_highlights, ...result.content_highlights]));
-	const urlString = $derived(result.url);
-	const hostName = new URL(untrack(() => urlString))?.hostname;
+
+	const { result } = $props(),
+		highlights = $derived(new Set([...result.title_highlights, ...result.content_highlights])),
+		urlString = $derived(result.url),
+		hostName = new URL(untrack(() => urlString))?.hostname;
+
 	function openLink() {
 		navigation.navigate(urlString);
 	}
