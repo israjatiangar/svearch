@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
+	import { slide } from 'svelte/transition';
 	import Result from '../../components/Result.svelte';
 
-	const query = $derived(page.url.searchParams.get('query'));
+	const { query } = $props();
 	let count = $state(10);
 
 	let searchData: Search.Data = $state({
@@ -37,26 +37,18 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{query} at svearch</title>
-</svelte:head>
-
-<main class="min-h-dvh bg-base-200">
-	<section class="w-full place-items-center space-y-4 py-4">
-		<div class="flex w-full flex-col place-items-center gap-2">
-			{#if searchData.number_of_results > 0}
-				{#each searchData.results.slice(0, count) as item, key (key)}
-					<Result result={item} />
-				{/each}
-			{/if}
-		</div>
-		<div>
-			{#if count < searchData.number_of_results}
-				<button class="btn btn-soft btn-primary" onclick={() => (count += 10)}>Show More</button>
-			{/if}
-			{#if count > 10}
-				<button class="btn btn-soft btn-accent" onclick={() => (count = 10)}>Show less</button>
-			{/if}
-		</div>
-	</section>
-</main>
+<div transition:slide={{ axis: 'y' }} class="flex w-full flex-col place-items-center gap-2">
+	{#if searchData.number_of_results > 0}
+		{#each searchData.results.slice(0, count) as item, key (key)}
+			<Result result={item} />
+		{/each}
+	{/if}
+</div>
+<div>
+	{#if count < searchData.number_of_results}
+		<button class="btn btn-soft btn-primary" onclick={() => (count += 10)}>Show More</button>
+	{/if}
+	{#if count > 10}
+		<button class="btn btn-soft btn-accent" onclick={() => (count = 10)}>Show less</button>
+	{/if}
+</div>

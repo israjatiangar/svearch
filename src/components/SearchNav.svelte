@@ -6,7 +6,7 @@
 	let SearchNavForm: HTMLFormElement | null;
 </script>
 
-<header class="navbar bg-base-100 shadow-sm">
+<header class="navbar bg-base-300 shadow-sm">
 	<nav class="flex w-full">
 		<div class="flex-none">
 			<a href={resolve('/')} class="btn btn-ghost text-xl">svearch</a>
