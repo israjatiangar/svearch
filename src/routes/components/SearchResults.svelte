@@ -38,11 +38,9 @@
 </script>
 
 <div transition:slide={{ axis: 'y' }} class="flex w-full flex-col place-items-center gap-2">
-	{#if searchData.number_of_results > 0}
-		{#each searchData.results.slice(0, count) as item, key (key)}
-			<Result result={item} />
-		{/each}
-	{/if}
+	{#each searchData.results.slice(0, count) as item, key (key)}
+		<Result result={item} />
+	{/each}
 </div>
 <div>
 	{#if count < searchData.number_of_results}

@@ -2,10 +2,10 @@
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
 	import SearchResults from './components/SearchResults.svelte';
-	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 
 	let input: HTMLInputElement | null = $state(null);
-	const query = $derived(page.url.searchParams.get('query'));
+	let query = $derived(page.url.searchParams.get('query'));
 	let showResults = $state(false);
 
 	function onsubmit() {
@@ -24,7 +24,11 @@
 			return;
 		}
 	}
-	onMount(() => input?.focus());
+	function onclick() {
+		query = '';
+		const form = document.querySelector('form')!;
+		form.requestSubmit();
+	}
 </script>
 
 <main class="min-h-dvh w-dvw place-content-center **:rounded-selector">
@@ -37,9 +41,16 @@
 			{onsubmit}
 		>
 			<span
-				class={`flex place-items-center gap-2 transition transition-discrete *:transition ${showResults ? '*:[button]:btn-lg *:[input]:input-lg' : '*:[button]:btn-xl *:[input]:input-xl'}`}
+				class={`flex place-items-center gap-2 transition transition-discrete *:transition ${showResults ? '*:[.btn]:btn-lg *:[input]:input-lg' : '*:[.btn]:btn-xl *:[input]:input-xl'}`}
 			>
+				<a
+					{onclick}
+					data-sveltekit-preload-data="tap"
+					href={resolve('/')}
+					class="btn btn-soft btn-accent">‹</a
+				>
 				<input
+					contenteditable="true"
 					bind:this={input}
 					id="Search"
 					class="input flex-1"
