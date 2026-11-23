@@ -4,7 +4,6 @@
 	import SearchResults from './components/SearchResults.svelte';
 	import { resolve } from '$app/paths';
 
-	let input: HTMLInputElement | null = $state(null);
 	let query = $derived(page.url.searchParams.get('query'));
 	let showResults = $state(false);
 
@@ -17,7 +16,7 @@
 		return showResults;
 	}
 	function onkeydown(event: KeyboardEvent) {
-		if (event.key === 'Enter') {
+		if (event.code === 'Enter') {
 			const form = document.querySelector('form')!;
 			form.requestSubmit();
 		} else {
@@ -43,20 +42,21 @@
 			<span
 				class={`flex place-items-center gap-2 transition transition-discrete *:transition ${showResults ? '*:[.btn]:btn-lg *:[input]:input-lg' : '*:[.btn]:btn-xl *:[input]:input-xl'}`}
 			>
-				<a
-					{onclick}
-					data-sveltekit-preload-data="tap"
-					href={resolve('/')}
-					class="btn btn-soft btn-accent">‹</a
-				>
+				{#if showResults}
+					<a
+						transition:slide
+						{onclick}
+						data-sveltekit-preload-data="tap"
+						href={resolve('/')}
+						class="btn btn-soft btn-accent">‹</a
+					>
+				{/if}
 				<input
 					contenteditable="true"
-					bind:this={input}
 					id="Search"
 					class="input flex-1"
 					name="query"
 					type="search"
-					value={query}
 					placeholder="Search here..."
 					{onkeydown}
 				/>
