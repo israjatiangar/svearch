@@ -30,6 +30,14 @@
 	}
 </script>
 
+<svelte:head>
+	{#if showResults}
+		<title>{query} at Svearch</title>
+	{:else}
+		<title>Svearch</title>
+	{/if}
+</svelte:head>
+
 <main class="min-h-dvh w-dvw place-content-center **:rounded-selector">
 	<header class="sticky top-0 z-10 flex h-full w-full flex-col place-items-center">
 		<form
