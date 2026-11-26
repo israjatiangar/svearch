@@ -6,5 +6,8 @@
 	let { children }: LayoutProps = $props();
 </script>
 
-{@render children()}
+<main class="min-h-dvh w-dvw place-content-center place-items-center **:rounded-selector">
+	{@render children()}
+</main>
+
 <Footer />
