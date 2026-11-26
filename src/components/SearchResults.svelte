@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import Result from '../../components/Result.svelte';
-	import ResultSkeleton from '../../components/ResultSkeleton.svelte';
+	import Result from './Result.svelte';
+	import ResultSkeleton from './ResultSkeleton.svelte';
 
 	const { query } = $props();
 	let count = $state(10);

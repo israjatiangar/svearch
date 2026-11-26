@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
-	import SearchResults from './components/SearchResults.svelte';
 	import { resolve } from '$app/paths';
+	import SearchResults from '../components/SearchResults.svelte';
 
 	let query = $derived(page.url.searchParams.get('query'));
 	let showResults = $state(false);
